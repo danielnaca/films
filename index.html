@@ -189,7 +189,7 @@ const D=JSON.parse(document.getElementById('data').textContent);
 const V=Object.fromEntries(D.venues.map(v=>[v.id,v]));
 let lang='en';try{lang=localStorage.getItem('brc-lang')||((navigator.language||'').startsWith('es')?'es':'en')}catch(e){}
 const T=()=>D.i18n.ui[lang];
-const KIND_IDS=['repertory','festival','event','first-run'];
+const KIND_IDS=['repertory','event','first-run'];
 let KINDS,KSHORT,MON,WK;
 function loadLang(){const u=T();KINDS=KIND_IDS.map(k=>[k,u.kinds[k]]);KSHORT=u.kshort;MON=u.mon;WK=u.wk;
   document.documentElement.lang=lang;
@@ -198,12 +198,12 @@ function loadLang(){const u=T();KINDS=KIND_IDS.map(k=>[k,u.kinds[k]]);KSHORT=u.k
   ['en','es'].forEach(x=>document.getElementById('l-'+x).setAttribute('aria-pressed',lang===x));
   document.getElementById('sortlbl').textContent=T().sort;document.getElementById('s-name').textContent=T().byname;document.getElementById('s-time').textContent=T().bytime;
   renderFestHTML();renderVenues();}
-let kinds=new Set(['repertory','festival','event','first-run']);
+let kinds=new Set(['repertory','event','first-run']);
 let venues=new Set(); // empty = all
 let sortBy='name';try{sortBy=localStorage.getItem('brc-sort')||'name'}catch(e){}
 let q='';
 let view='grid';try{view=localStorage.getItem('brc-view')||'grid'}catch(e){}
-try{const s=JSON.parse(localStorage.getItem('brc-filters')||'null');if(s){kinds=new Set(s.k);venues=new Set(s.v)}}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('brc-filters')||'null');if(s){kinds=new Set(s.k.filter(k=>KIND_IDS.includes(k)));if(!kinds.size)kinds=new Set(KIND_IDS);venues=new Set(s.v)}}catch(e){}
 const save=()=>{try{localStorage.setItem('brc-filters',JSON.stringify({k:[...kinds],v:[...venues]}))}catch(e){}};
 
 const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -225,7 +225,7 @@ function renderChips(){
 function shortName(v){return v.name.replace(/\s*\(.*?\)/,'').replace('Cinecooperativa','').replace('Sala ','').replace(' Experience','').replace('de Catalunya','').replace(' – CCCB','').replace(' de Barcelona','').replace('Cinemes ','').trim()}
 
 function matches(s){
-  if(view==='grid'&&!kinds.has(s.kind))return false;
+  if(view==='grid'&&s.kind!=='festival'&&!kinds.has(s.kind))return false;
   if(view==='cal'&&venues.size&&!venues.has(s.venue_id))return false;
   if(q){const hay=(s.title+' '+(s.aka||'')+' '+(s.director||'')+' '+(s.cycle||'')+' '+(s.note||'')+' '+(V[s.venue_id]||{}).name).toLowerCase();if(!hay.includes(q))return false}
   return true;
