@@ -92,6 +92,14 @@ button{font:inherit;color:inherit}
 .evn{margin:8px 0 0;font-size:14px;line-height:1.45;max-width:60ch}
 .evv{font-family:var(--narrow);font-weight:600;font-size:13px;color:var(--ink-2);text-align:right}
 @media (max-width:640px){.ev{grid-template-columns:1fr}.evv{text-align:left}}
+/* date strip */
+.dates{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -4px;padding:0 4px;border-top:1px solid var(--rule);padding-top:8px}
+.dates::-webkit-scrollbar{display:none}
+.dt{border:0;background:transparent;padding:3px 8px;font-family:var(--mono);font-size:12px;cursor:pointer;color:var(--ink-2);white-space:nowrap;border-bottom:2px solid transparent;flex:0 0 auto}
+.dt b{font-weight:500;color:var(--ink)}
+.dt.on{border-bottom-color:var(--red)}
+.dt.on b{color:var(--red)}
+.dt:focus-visible{outline:2px solid var(--red);outline-offset:2px}
 /* week jump */
 
 /* festivals strip */
@@ -187,6 +195,7 @@ mark{background:var(--hl);color:inherit}
     <div class="row" id="row-venues">
       <div class="row" id="venues"></div>
     </div>
+    <div class="dates" id="dates" hidden></div>
   </div>
 
   <main id="list"></main>
@@ -295,7 +304,22 @@ function render(){
   renderWeeks([...byDay.keys()]);
 }
 
-function renderWeeks(){}
+let dayObs=null;
+function renderWeeks(dates){
+  const w=document.getElementById('dates');w.innerHTML='';
+  if(dayObs){dayObs.disconnect();dayObs=null}
+  if(view!=='cal'||!dates.length){w.hidden=true;setRailH();return}
+  w.hidden=false;
+  dates.forEach(date=>{const d=new Date(date+'T12:00:00');const b=document.createElement('button');b.className='dt';b.dataset.date=date;b.innerHTML=`${WK[d.getDay()].slice(0,3)} <b>${d.getDate()}</b>`;
+    b.addEventListener('click',()=>{const el=document.getElementById('d-'+date);if(!el)return;const y=el.getBoundingClientRect().top+window.scrollY-document.getElementById('rail').offsetHeight-6;window.scrollTo({top:y});setOn(date)});w.appendChild(b)});
+  const setOn=date=>{[...w.children].forEach(c=>c.classList.toggle('on',c.dataset.date===date));const on=w.querySelector('.on');if(on){const r=on.getBoundingClientRect(),wr=w.getBoundingClientRect();if(r.left<wr.left||r.right>wr.right)on.scrollIntoView({block:'nearest',inline:'center'})}};
+  const railH=()=>document.getElementById('rail').offsetHeight;
+  const visible=new Set();
+  dayObs=new IntersectionObserver(es=>{es.forEach(e=>{const d=e.target.id.slice(2);e.isIntersecting?visible.add(d):visible.delete(d)});
+    if(visible.size){setOn([...visible].sort()[0])}},{rootMargin:`-${railH()+8}px 0px -60% 0px`,threshold:0});
+  document.querySelectorAll('.day').forEach(el=>dayObs.observe(el));
+  setOn(dates[0]);setRailH();
+}
 
 // festivals
 let FEST_HTML='';
@@ -313,7 +337,7 @@ function renderFest(){document.getElementById('list').innerHTML=FEST_HTML}
 function renderVenues(){document.getElementById('vgrid').innerHTML=D.venues.map(v=>{const st=v.status||'';const desc=lang==='es'&&D.i18n.venues_es[v.id]||(v.description||'').split(/(?<=\.)\s+(?=[A-Z'])/)[0];const noList=/could NOT be retrieved/i.test(v.description||'');return `<div class="v"><b>${esc(v.name)}</b><span class="addr">${esc(v.neighbourhood||'')}${v.address?' · '+esc(v.address.replace(', 08\\d{3} Barcelona','').replace(/,? 08\d{3} Barcelona.*$/,'')):''}</span>${esc(desc)}${st?` <span class="st ${/closed/i.test(st)?'closed':''}">${esc(/closed/i.test(st)?T().closed:st)}</span>`:noList?` <span class="st">${T().nolist}</span>`:''}<br><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.url.replace(/^https?:\/\/(www\.)?/,'').split('/')[0])}</a></div>`}).join('');}
 
 
-const syncRows=()=>{document.getElementById('rail').classList.toggle('bare',view==='fest'||view==='ev');document.getElementById('row-kinds').hidden=view!=='grid';document.getElementById('row-venues').hidden=view!=='cal';setRailH()};
+const syncRows=()=>{if(view!=='cal'){document.getElementById('dates').hidden=true}document.getElementById('rail').classList.toggle('bare',view==='fest'||view==='ev');document.getElementById('row-kinds').hidden=view!=='grid';document.getElementById('row-venues').hidden=view!=='cal';setRailH()};
 const setView=v=>{view=v;try{localStorage.setItem('brc-view',v)}catch(e){};syncRows();['cal','grid','ev','fest'].forEach(x=>document.getElementById('v-'+x).setAttribute('aria-pressed',v===x));render()};
 document.getElementById('v-ev').addEventListener('click',()=>setView('ev'));
 document.getElementById('v-fest').addEventListener('click',()=>setView('fest'));
