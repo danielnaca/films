@@ -239,7 +239,7 @@ function renderChips(){
   vv.appendChild(chip(T().all,'',venues.size===0,()=>{venues.clear();save();renderChips();render()}));
   venueOrder.forEach(v=>vv.appendChild(chip(shortName(v),'',venues.has(v.id),()=>{venues.has(v.id)?venues.delete(v.id):venues.add(v.id);save();renderChips();render()})));
 }
-function shortName(v){return v.name.replace(/\s*\(.*?\)/,'').replace('Cinecooperativa','').replace('Sala ','').replace(' Experience','').replace('de Catalunya','').replace(' – CCCB','').replace(' de Barcelona','').replace('Cinemes ','').replace('Renoir Floridablanca','Renoir').replace('CaixaForum Barcelona','CaixaForum').trim()}
+function shortName(v){return v.name.replace(/\s*\(.*?\)/,'').replace('Cinecooperativa','').replace('Sala ','').replace(' Experience','').replace('de Catalunya','').replace(' – CCCB','').replace(' de Barcelona','').replace('Cinemes ','').replace('Renoir Floridablanca','Renoir').replace('CaixaForum Barcelona','CaixaForum').replace('Institut français','Institut Fr.').trim()}
 
 function matches(s){
   if(view==='ev')return s.kind==='event';
