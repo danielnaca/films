@@ -96,7 +96,7 @@ button{font:inherit;color:inherit}
 .dwk{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
 .dlist{display:flex;flex-direction:column;min-width:0;max-width:780px}
 
-.scr{display:grid;grid-template-columns:52px 46px minmax(0,1fr) 150px;gap:4px 14px;padding:8px 0;border-top:1px dotted var(--rule);align-items:start}
+.scr{display:grid;grid-template-columns:46px minmax(0,1fr) 210px;gap:4px 14px;padding:8px 0;border-top:1px dotted var(--rule);align-items:start}
 .pst{width:46px;height:68px;object-fit:cover;display:block;background:var(--panel);border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.25)}
 .pst.none{display:grid;place-items:center;font-family:var(--mono);font-size:9px;letter-spacing:.06em;color:var(--ink-2);text-transform:uppercase;text-align:center;line-height:1.2;padding:4px;border:1px dashed var(--rule);box-shadow:none}
 .scr .time{padding-top:3px}
@@ -118,8 +118,10 @@ button{font:inherit;color:inherit}
 .note{color:var(--ink-2);font-style:italic}
 .fmt{font-family:var(--mono);font-size:11px;background:var(--hl);padding:0 4px;border-radius:3px}
 .ven{font-family:var(--narrow);font-weight:600;font-size:13px;line-height:1.25;text-align:right;color:var(--ink-2)}
-.ven .sh{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:2px 10px}
-.ven .sht{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink);cursor:help;border-bottom:1px dotted var(--rule)}
+.ven .sh{display:block;text-align:right;margin-bottom:4px}
+.ven .shv{display:block;color:var(--ink-2);font-size:12px}
+.ven .sht{display:block;font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.5}
+.ven .k{text-align:right}
 .ven .k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);opacity:.8}
 mark{background:var(--hl);color:inherit}
 
@@ -141,9 +143,9 @@ mark{background:var(--hl);color:inherit}
   .day{grid-template-columns:1fr;gap:8px}
   .dhead{position:static;display:flex;align-items:baseline;gap:10px}
   .dnum{font-size:30px}
-  .scr{grid-template-columns:40px 46px minmax(0,1fr)}
-  .ven{grid-column:3;text-align:left;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
-  .ven .sh{justify-content:flex-start}
+  .scr{grid-template-columns:46px minmax(0,1fr)}
+  .ven{grid-column:2;text-align:left;display:block}
+  .ven .sh,.ven .k{text-align:left}
   .ven .k{display:inline}
   .count{margin-left:0;width:100%}
 }
@@ -266,8 +268,8 @@ function render(){
       const fmt=(s.note||'').match(fmtRe)||(s.cycle||'').match(fmtRe);
       const tags=[s.cycle?`<span class="cyc">${hl(s.cycle)}</span>`:'',fmt?`<span class="fmt">${esc(fmt[0])}</span>`:'',s.version?`<span class="ver">${esc(s.version)}</span>`:'',s.note?`<span class="note">${hl(s.note)}</span>`:''].filter(Boolean).join('');
       const first=s.time?esc(s.time):T().tbc;
-      const showings='<div class="sh">'+[...g.by.entries()].flatMap(([vn,ts])=>ts.map(x=>[x||'99:99',vn])).sort((a,b)=>a[0].localeCompare(b[0])).map(([x,vn])=>`<span class="sht" title="${esc(vn)}">${x!=='99:99'?esc(x):T().tbcshort}</span>`).join('')+'</div>';
-      html+=`<article class="scr ${s.kind==='first-run'?'firstrun':''}"><div class="time ${s.time?'':'tbc'}">${first}</div>${s.poster?`<img class="pst" src="${esc(s.poster)}" alt="" loading="lazy">`:`<div class="pst none">${T()[s.kind==='event'?'talk':s.kind==='festival'?'fest':'film']}</div>`}<div class="film"><div class="ttl">${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${hl(s.title)}</a>`:hl(s.title)}</div>${(meta||s.aka)?`<div class="meta">${s.aka&&s.aka.toLowerCase()!==s.title.toLowerCase()?`<span class="aka">${hl(s.aka)}</span>${(s.director||s.year)?' · ':''}`:''}${hl(s.director)||''}${s.director&&s.year?' · ':''}${s.year?`<span class="yr">${s.year}</span>`:''}</div>`:''}${tags?`<div class="tags">${tags}</div>`:''}</div><div class="ven">${showings}<span class="k">${KSHORT[s.kind]}</span></div></article>`;
+      const showings=[...g.by.entries()].map(([vn,ts])=>`<div class="sh"><span class="shv">${esc(vn)}</span><span class="sht">${ts.map(x=>x||'99:99').sort().map(x=>x!=='99:99'?esc(x):T().tbcshort).join(' · ')}</span></div>`).join('');
+      html+=`<article class="scr ${s.kind==='first-run'?'firstrun':''}">${s.poster?`<img class="pst" src="${esc(s.poster)}" alt="" loading="lazy">`:`<div class="pst none">${T()[s.kind==='event'?'talk':s.kind==='festival'?'fest':'film']}</div>`}<div class="film"><div class="ttl">${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${hl(s.title)}</a>`:hl(s.title)}</div>${(meta||s.aka)?`<div class="meta">${s.aka&&s.aka.toLowerCase()!==s.title.toLowerCase()?`<span class="aka">${hl(s.aka)}</span>${(s.director||s.year)?' · ':''}`:''}${hl(s.director)||''}${s.director&&s.year?' · ':''}${s.year?`<span class="yr">${s.year}</span>`:''}</div>`:''}${tags?`<div class="tags">${tags}</div>`:''}</div><div class="ven">${showings}<span class="k">${KSHORT[s.kind]}</span></div></article>`;
     }
     html+='</div></section>';
   }
