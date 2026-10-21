@@ -94,6 +94,7 @@ button{font:inherit;color:inherit}
 @media (max-width:640px){.ev{grid-template-columns:1fr}.evv{text-align:left}}
 /* date strip */
 .dates{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -4px;padding:0 4px;border-top:1px solid var(--rule);padding-top:8px}
+body:not(.scrolled) .dates{display:none}
 .dates::-webkit-scrollbar{display:none}
 .dt{border:0;background:transparent;padding:3px 8px;font-family:var(--mono);font-size:12px;cursor:pointer;color:var(--ink-2);white-space:nowrap;border-bottom:2px solid transparent;flex:0 0 auto}
 .dt b{font-weight:500;color:var(--ink)}
@@ -311,7 +312,7 @@ function renderWeeks(dates){
   if(view!=='cal'||!dates.length){w.hidden=true;setRailH();return}
   w.hidden=false;
   dates.forEach(date=>{const d=new Date(date+'T12:00:00');const b=document.createElement('button');b.className='dt';b.dataset.date=date;b.innerHTML=`${WK[d.getDay()].slice(0,3)} <b>${d.getDate()}</b>`;
-    b.addEventListener('click',()=>{const el=document.getElementById('d-'+date);if(!el)return;const y=el.getBoundingClientRect().top+window.scrollY-document.getElementById('rail').offsetHeight-6;window.scrollTo({top:y});setOn(date)});w.appendChild(b)});
+    b.addEventListener('click',()=>{const el=document.getElementById('d-'+date);if(!el)return;document.body.classList.add('scrolled');wasScrolled=true;const y=el.getBoundingClientRect().top+window.scrollY-document.getElementById('rail').offsetHeight-6;window.scrollTo({top:y});setOn(date);setRailH()});w.appendChild(b)});
   const setOn=date=>{[...w.children].forEach(c=>c.classList.toggle('on',c.dataset.date===date));const on=w.querySelector('.on');if(on){const r=on.getBoundingClientRect(),wr=w.getBoundingClientRect();if(r.left<wr.left||r.right>wr.right)on.scrollIntoView({block:'nearest',inline:'center'})}};
   const railH=()=>document.getElementById('rail').offsetHeight;
   const visible=new Set();
@@ -344,6 +345,9 @@ document.getElementById('v-fest').addEventListener('click',()=>setView('fest'));
 document.getElementById('v-cal').addEventListener('click',()=>setView('cal'));
 document.getElementById('v-grid').addEventListener('click',()=>setView('grid'));
 ['cal','grid','ev','fest'].forEach(x=>document.getElementById('v-'+x).setAttribute('aria-pressed',view===x));
+let wasScrolled=false;
+const onScroll=()=>{const s=window.scrollY>200;if(s!==wasScrolled){wasScrolled=s;document.body.classList.toggle('scrolled',s);setRailH()}};
+window.addEventListener('scroll',onScroll,{passive:true});
 const setRailH=()=>document.documentElement.style.setProperty('--railh',document.getElementById('rail').offsetHeight+'px');
 window.addEventListener('resize',setRailH);
 const setLang=l=>{lang=l;try{localStorage.setItem('brc-lang',l)}catch(e){};loadLang();renderChips();render()};
