@@ -149,20 +149,18 @@ mark{background:var(--hl);color:inherit}
 <div class="wrap">
   <header class="mast">
     <h1>Arthouse <span>Barcelona</span></h1>
-    <p class="sub"><b>19 Oct – 29 Nov 2026.</b> Art-house, repertory and festival screenings across the city's independent screens. Filmoteca, Zumzeig, Phenomena, Xcèntric, Girona, Verdi, Maldà and the festivals that use them. Now Playing hides first-run releases unless you switch them on; the Calendar lists everything by day.</p>
+    <p class="sub">Art-house, repertory and festival screenings across Barcelona's independent cinemas, from the Filmoteca to the single-screen cooperatives. Now Playing hides first-run releases unless you switch them on; the Calendar lists everything by day.</p>
   </header>
 
   <div class="rail" id="rail">
     <div class="row">
       <div class="seg" role="group" aria-label="View"><button class="segb" id="v-grid" aria-pressed="true">Now Playing</button><button class="segb" id="v-cal" aria-pressed="false">Calendar</button></div>
-      <span class="count" id="count"></span>
+      <span class="count" id="count">19 Oct – 29 Nov 2026</span>
     </div>
     <div class="row" id="row-kinds">
-      <span class="lbl">Show</span>
       <div class="row" id="kinds"></div>
     </div>
     <div class="row" id="row-venues">
-      <span class="lbl">Venue</span>
       <div class="row" id="venues"></div>
     </div>
     <div class="weeks" id="weeks"></div>
@@ -228,7 +226,6 @@ function renderGrid(rows){
   const films=new Map();
   rows.forEach(s=>{const k=(s.title+'|'+(s.year||'')).toLowerCase();if(!films.has(k))films.set(k,{s,dates:[],venues:new Set()});const f=films.get(k);f.dates.push(s);f.venues.add(shortName(V[s.venue_id]||{name:s.venue_id}))});
   const arr=[...films.values()].sort((a,b)=>a.dates[0].date.localeCompare(b.dates[0].date)||(a.dates[0].time||'99').localeCompare(b.dates[0].time||'99'));
-  document.getElementById('count').textContent=arr.length+' film'+(arr.length===1?'':'s')+' · '+rows.length+' screenings';
   if(!arr.length){list.innerHTML='<p class="empty">Nothing matches. Widen the filters or clear the search.</p>';renderWeeks([]);return}
   const fd=d=>{const x=new Date(d+'T12:00:00');return WK[x.getDay()].slice(0,3)+' '+x.getDate()+' '+MON[x.getMonth()]};
   list.innerHTML='<div class="grid">'+arr.map(f=>{const s=f.s;const ds=f.dates.slice(0,3).map(x=>`<b>${fd(x.date)}</b> ${x.time?esc(x.time):'tbc'}`).join('<br>')+(f.dates.length>3?`<br>+${f.dates.length-3} more`:'');
@@ -242,7 +239,6 @@ function render(){
   const rows=D.screenings.filter(matches).filter(s=>s.date>=todayStr||s.date>=D.window.slice(0,10));
   rows.sort((a,b)=>a.date.localeCompare(b.date)||(a.time||'99').localeCompare(b.time||'99')||a.title.localeCompare(b.title));
   if(view==='grid'){renderGrid(rows);return}
-  document.getElementById('count').textContent=rows.length+' screening'+(rows.length===1?'':'s');
   const byDay=new Map();rows.forEach(s=>{if(!byDay.has(s.date))byDay.set(s.date,[]);byDay.get(s.date).push(s)});
   if(!byDay.size){list.innerHTML='<p class="empty">Nothing matches. Widen the filters or clear the search.</p>';renderWeeks([]);return}
   let html='';
