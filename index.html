@@ -191,7 +191,7 @@ const D=JSON.parse(document.getElementById('data').textContent);
 const V=Object.fromEntries(D.venues.map(v=>[v.id,v]));
 let lang='en';try{lang=localStorage.getItem('brc-lang')||((navigator.language||'').startsWith('es')?'es':'en')}catch(e){}
 const T=()=>D.i18n.ui[lang];
-const KIND_IDS=['repertory','event','first-run'];
+const KIND_IDS=['first-run','repertory','event'];
 let KINDS,KSHORT,MON,WK;
 function loadLang(){const u=T();KINDS=KIND_IDS.map(k=>[k,u.kinds[k]]);KSHORT=u.kshort;MON=u.mon;WK=u.wk;
   document.documentElement.lang=lang;
