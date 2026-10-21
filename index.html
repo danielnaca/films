@@ -39,9 +39,10 @@ button{font:inherit;color:inherit}
 /* filter rail */
 .rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);padding:0 0 10px;display:flex;flex-direction:column;gap:10px}
 .rail .tabs{border-bottom:1px solid var(--rule);padding:4px 0 11px;align-items:flex-end}
+.rail.bare{border-bottom:0;padding-bottom:0}
 .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .lbl{font-family:var(--narrow);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:var(--ink-2);margin-right:4px;min-width:52px}
-.chip{border:1px solid var(--rule);background:var(--chip);border-radius:999px;padding:4px 11px;font-family:var(--narrow);font-weight:600;font-size:13px;cursor:pointer;line-height:1.3;white-space:nowrap}
+.chip{border:1px solid transparent;background:var(--panel);border-radius:999px;padding:4px 11px;font-family:var(--narrow);font-weight:600;font-size:13px;cursor:pointer;line-height:1.3;white-space:nowrap}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .chip.kind[aria-pressed="true"]{background:var(--red);color:var(--red-ink);border-color:var(--red)}
 .chip:focus-visible,.jump:focus-visible{outline:2px solid var(--red);outline-offset:2px}
@@ -83,7 +84,7 @@ button{font:inherit;color:inherit}
 .dnum{font-family:var(--display);font-weight:800;font-size:44px;line-height:.9;letter-spacing:-.03em}
 .dmon{font-family:var(--narrow);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:12px;margin-top:4px}
 .dwk{font-family:var(--mono);font-size:11px;color:var(--ink-2)}
-.dlist{display:flex;flex-direction:column;min-width:0}
+.dlist{display:flex;flex-direction:column;min-width:0;max-width:780px}
 
 .scr{display:grid;grid-template-columns:52px 46px minmax(0,1fr) 150px;gap:4px 14px;padding:8px 0;border-top:1px dotted var(--rule);align-items:start}
 .pst{width:46px;height:68px;object-fit:cover;display:block;background:var(--panel);border-radius:2px;box-shadow:0 1px 2px rgba(0,0,0,.25)}
@@ -257,7 +258,7 @@ document.getElementById('vgrid').innerHTML=D.venues.map(v=>{const st=v.status||'
 
 document.getElementById('foot').textContent=`Compiled ${D.generated||'19 Oct 2026'} from each venue's own programme pages (Filmoteca and Xcèntric run through 29 Nov; Phenomena to 11 Nov; Zumzeig to 5 Nov; Girona to 7 Nov; Renoir one week only). In-Edit sessions show "TIME TBC" where the festival published only a PDF grid. Cinema Maldà and Espai Texas are open but publish no machine-readable listings; L'Alternativa (12–22 Nov) has not released its full schedule. Always check the venue before you go. Posters via TMDB.`;
 
-const syncRows=()=>{document.getElementById('row-kinds').hidden=view!=='grid';document.getElementById('row-venues').hidden=view!=='cal';setRailH()};
+const syncRows=()=>{document.getElementById('rail').classList.toggle('bare',view==='fest');document.getElementById('row-kinds').hidden=view!=='grid';document.getElementById('row-venues').hidden=view!=='cal';setRailH()};
 const setView=v=>{view=v;try{localStorage.setItem('brc-view',v)}catch(e){};syncRows();['cal','grid','fest'].forEach(x=>document.getElementById('v-'+x).setAttribute('aria-pressed',v===x));render()};
 document.getElementById('v-fest').addEventListener('click',()=>setView('fest'));
 document.getElementById('v-cal').addEventListener('click',()=>setView('cal'));
