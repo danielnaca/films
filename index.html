@@ -166,10 +166,10 @@ mark{background:var(--hl);color:inherit}
     </div>
     <div class="row" id="row-kinds">
       <div class="row" id="kinds"></div>
+      <div class="sort" role="group" aria-label="Sort"><span id="sortlbl"></span><button class="sb" id="s-name" aria-pressed="true"></button><button class="sb" id="s-time" aria-pressed="false"></button></div>
     </div>
     <div class="row" id="row-venues">
       <div class="row" id="venues"></div>
-      <div class="sort" role="group" aria-label="Sort"><span id="sortlbl"></span><button class="sb" id="s-name" aria-pressed="true"></button><button class="sb" id="s-time" aria-pressed="false"></button></div>
     </div>
   </div>
 
@@ -236,7 +236,7 @@ function renderGrid(rows){
   const list=document.getElementById('list');
   const films=new Map();
   rows.forEach(s=>{const k=s.title.toLowerCase().trim();if(!films.has(k))films.set(k,{s,dates:[],venues:new Set()});const f=films.get(k);f.dates.push(s);f.venues.add(shortName(V[s.venue_id]||{name:s.venue_id}))});
-  const arr=[...films.values()].sort((a,b)=>a.dates[0].date.localeCompare(b.dates[0].date)||(a.dates[0].time||'99').localeCompare(b.dates[0].time||'99'));
+  const arr=[...films.values()].sort((a,b)=>sortBy==='name'?a.s.title.localeCompare(b.s.title,undefined,{sensitivity:'base'}):(a.dates[0].date.localeCompare(b.dates[0].date)||(a.dates[0].time||'99').localeCompare(b.dates[0].time||'99')));
   if(!arr.length){list.innerHTML='<p class="empty">'+T().empty+'</p>';renderWeeks([]);return}
   const fd=d=>{const x=new Date(d+'T12:00:00');return WK[x.getDay()].slice(0,3)+' '+x.getDate()+' '+MON[x.getMonth()]};
   list.innerHTML='<div class="grid">'+arr.map(f=>{const s=f.s;const ds=f.dates.slice(0,3).map(x=>`<b>${fd(x.date)}</b> ${x.time?esc(x.time):T().tbcshort}`).join('<br>')+(f.dates.length>3?`<br>+${f.dates.length-3} ${T().more}`:'');
@@ -260,7 +260,6 @@ function render(){
     const groups=new Map();
     ss.forEach(s=>{const gk=s.title.toLowerCase().trim();if(!groups.has(gk))groups.set(gk,{s,by:new Map()});const g=groups.get(gk);const vn=shortName(V[s.venue_id]||{name:s.venue_id});if(!g.by.has(vn))g.by.set(vn,[]);g.by.get(vn).push(s.time)});
     const garr=[...groups.values()];
-    if(sortBy==='name')garr.sort((a,b)=>a.s.title.localeCompare(b.s.title,undefined,{sensitivity:'base'}));
     for(const g of garr){
       const s=g.s;
       const meta=[s.director,s.year?`<span class="yr">${s.year}</span>`:''].filter(Boolean).join(' · ');
