@@ -61,12 +61,12 @@ button{font:inherit;color:inherit}
 /* poster grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:22px 16px;padding:20px 0}
 .tile{min-width:0;display:flex;flex-direction:column;gap:6px}
-.tile .art{aspect-ratio:2/3;width:100%;max-width:100%;object-fit:cover;display:block;background:var(--panel);border-radius:3px;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.tile .art{aspect-ratio:2/3;width:100%;max-width:100%;object-fit:cover;display:block;background:var(--panel);border-radius:3px}
 .tile .art.none{display:grid;place-items:center;text-align:center;padding:12px;font-family:var(--narrow);font-weight:700;font-size:15px;line-height:1.2;color:var(--ink-2);border:1px dashed var(--rule);box-shadow:none;text-wrap:balance}
-.tile .tt{font-family:var(--narrow);font-weight:700;font-size:14px;line-height:1.2}
+.tile .tt{font-family:var(--narrow);font-weight:700;font-size:14px;line-height:1.2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .tile .tt a{text-decoration:none}
 .tile .tt a:hover{text-decoration:underline;text-decoration-color:var(--red)}
-.tile .tm{font-size:11px;color:var(--ink-2);line-height:1.35}
+.tile .tm{font-size:11px;color:var(--ink-2);line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .tile .tm .aka{font-style:italic}
 .tile .td{font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--ink)}
 .tile .td b{font-weight:500;color:var(--red)}
