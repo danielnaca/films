@@ -262,7 +262,7 @@ function renderWeeks(){}
 
 // festivals
 let FEST_HTML='';
-function renderFestHTML(){FEST_HTML='<div class="festgrid">'+D.festivals.map(f=>{const line=lang==='es'&&D.i18n.festivals_es[f.name]||f['one-line']||'';return `<div><b>${esc(f.name)}</b><span class="d">${esc(f.dates)}</span>${esc(line)}${f.url?`<br><a class="more" href="${esc(f.url)}" target="_blank" rel="noopener">${T().programme}</a>`:''}</div>`}).join('')+'</div>'}
+function renderFestHTML(){FEST_HTML='<div class="festgrid">'+D.festivals.map(f=>{const line=lang==='es'&&D.i18n.festivals_es[f.name]||f['one-line']||'';return `<div><b>${esc(f.name)}</b><span class="d">${esc(f.dates.replace(/ to /g,' – '))}</span>${esc(line)}${f.url?`<br><a class="more" href="${esc(f.url)}" target="_blank" rel="noopener">${T().programme}</a>`:''}</div>`}).join('')+'</div>'}
 function renderFest(){document.getElementById('list').innerHTML=FEST_HTML}
 
 // venue index
