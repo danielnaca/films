@@ -55,7 +55,7 @@ button{font:inherit;color:inherit}
 .mast .sub b{color:var(--ink);font-weight:500}
 
 /* filter rail */
-.rail{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);padding:0 0 10px;display:flex;flex-direction:column;gap:10px}
+.rail{max-width:100%;min-width:0;position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--rule);padding:0 0 10px;display:flex;flex-direction:column;gap:10px}
 .rail .tabs{border-bottom:1px solid var(--rule);padding:4px 0 11px;align-items:flex-end}
 .rail.bare{border-bottom:0;padding-bottom:0}
 .row{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
@@ -191,10 +191,9 @@ mark{background:var(--hl);color:inherit}
   .seg{gap:16px;overflow-x:auto;scrollbar-width:none;max-width:100%}
   .segb{margin-bottom:0;padding:6px 0 4px;font-size:14px}
   .sort{margin-left:auto}
-  .fbtn{display:inline-flex}
-  #row-venues{flex-direction:column;align-items:stretch;gap:8px}
-  #row-venues[data-open="false"] #venues{display:none}
-  #venues{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  #row-venues{display:block;max-width:100%;min-width:0;overflow:hidden}
+  #venues{display:flex;width:100%;max-width:100%;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+  #venues .chip{flex:0 0 auto}
   #venues::-webkit-scrollbar{display:none}
   .day{grid-template-columns:1fr;gap:8px}
   .dhead{position:static;display:flex;align-items:baseline;gap:10px}
@@ -225,7 +224,6 @@ mark{background:var(--hl);color:inherit}
       <div class="sort" role="group" aria-label="Sort"><button class="sb" id="s-name" aria-pressed="true"></button><button class="sb" id="s-time" aria-pressed="false"></button></div>
     </div>
     <div class="row" id="row-venues">
-      <button class="fbtn" id="fbtn" aria-expanded="false" hidden><span id="fbtn-l"></span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
       <div class="row" id="venues"></div>
     </div>
     <div class="dates" id="dates" hidden></div>
@@ -386,7 +384,6 @@ window.addEventListener('resize',setRailH);
 const setLang=l=>{lang=l;try{localStorage.setItem('brc-lang',l)}catch(e){};loadLang();renderChips();render()};
 const setSort=s=>{sortBy=s;try{localStorage.setItem('brc-sort',s)}catch(e){};['name','time'].forEach(x=>document.getElementById('s-'+x).setAttribute('aria-pressed',s===x));render()};
 document.getElementById('s-name').addEventListener('click',()=>setSort('name'));document.getElementById('s-time').addEventListener('click',()=>setSort('time'));['name','time'].forEach(x=>document.getElementById('s-'+x).setAttribute('aria-pressed',sortBy===x));
-const fb=document.getElementById('fbtn');fb.hidden=false;document.getElementById('row-venues').dataset.open='false';fb.addEventListener('click',()=>{const o=fb.getAttribute('aria-expanded')!=='true';fb.setAttribute('aria-expanded',o);document.getElementById('row-venues').dataset.open=o;setRailH()});
 document.getElementById('l-en').addEventListener('click',()=>setLang('en'));document.getElementById('l-es').addEventListener('click',()=>setLang('es'));
 loadLang();renderChips();render();syncRows();setTimeout(setRailH,600);
 })();
