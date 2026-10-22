@@ -287,7 +287,7 @@ function render(){
     html+=`<section class="day${date===todayStr?' today':''}" id="d-${date}"><div class="dhead"><div class="dnum">${d.getDate()}</div><div><div class="dmon">${MON[d.getMonth()]}</div><div class="dwk">${WK[d.getDay()]}${date===todayStr?' · '+T().today:''}</div></div></div><div class="dlist">`;
     const groups=new Map();
     ss.forEach(s=>{const gk=s.title.toLowerCase().trim();if(!groups.has(gk))groups.set(gk,{s,by:new Map()});const g=groups.get(gk);const vn=shortName(V[s.venue_id]||{name:s.venue_id});if(!g.by.has(vn))g.by.set(vn,[]);g.by.get(vn).push(s.time)});
-    const garr=[...groups.values()];
+    const garr=[...groups.values()].sort((a,b)=>a.s.title.localeCompare(b.s.title,undefined,{sensitivity:'base',ignorePunctuation:true}));
     for(const g of garr){
       const s=g.s;
       const meta=[s.director,s.year?`<span class="yr">${s.year}</span>`:''].filter(Boolean).join(' · ');
