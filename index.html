@@ -140,7 +140,7 @@ body:not(.scrolled) .dates{display:none}
 .ver{font-family:var(--mono);font-size:11px;color:var(--ink-2);border:1px solid var(--rule);border-radius:3px;padding:0 4px}
 .note{color:var(--ink-2);font-style:italic}
 .fmt{font-family:var(--mono);font-size:11px;background:var(--hl);padding:0 4px;border-radius:3px}
-.ven{font-family:var(--narrow);font-weight:600;font-size:12px;line-height:1.3;text-align:left;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:auto;padding-top:2px}
+.ven{font-family:var(--narrow);font-weight:600;font-size:12px;line-height:1.3;text-align:left;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:2px}
 .ven .sh{display:inline-flex;gap:6px;align-items:baseline;flex-wrap:wrap}
 .ven .shv{color:var(--ink-2)}
 .ven .sht{font-family:var(--mono);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink)}
@@ -292,10 +292,10 @@ function render(){
       const s=g.s;
       const meta=[s.director,s.year?`<span class="yr">${s.year}</span>`:''].filter(Boolean).join(' · ');
       const fmt=(s.note||'').match(fmtRe)||(s.cycle||'').match(fmtRe);
-      const tags=[s.cycle?`<span class="cyc">${hl(s.cycle)}</span>`:'',fmt?`<span class="fmt">${esc(fmt[0])}</span>`:'',s.version?`<span class="ver">${esc(s.version)}</span>`:'',s.note?`<span class="note">${hl(s.note)}</span>`:''].filter(Boolean).join('');
+      const tags=[s.version?`<span class="ver">${esc(s.version)}</span>`:''].filter(Boolean).join('');
       const first=s.time?esc(s.time):T().tbc;
       const showings=[...g.by.entries()].map(([vn,ts])=>`<div class="sh"><span class="shv">${esc(vn)}</span><span class="sht">${ts.map(x=>x||'99:99').sort().map(x=>x!=='99:99'?esc(x):T().tbcshort).join(' · ')}</span></div>`).join('');
-      html+=`<article class="scr ${s.kind==='first-run'?'firstrun':''}">${s.poster?`<img class="pst" src="${esc(s.poster)}" alt="" loading="lazy">`:`<div class="pst none">${T()[s.kind==='event'?'talk':s.kind==='festival'?'fest':'film']}</div>`}<div class="film"><div class="ttl">${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${hl(s.title)}</a>`:hl(s.title)}</div>${(meta||s.aka)?`<div class="meta">${s.aka&&s.aka.toLowerCase()!==s.title.toLowerCase()?`<span class="aka">${hl(s.aka)}</span>${(s.director||s.year)?' · ':''}`:''}${hl(s.director)||''}${s.director&&s.year?' · ':''}${s.year?`<span class="yr">${s.year}</span>`:''}</div>`:''}${tags?`<div class="tags">${tags}</div>`:''}</div><div class="ven">${showings}</div></article>`;
+      html+=`<article class="scr ${s.kind==='first-run'?'firstrun':''}">${s.poster?`<img class="pst" src="${esc(s.poster)}" alt="" loading="lazy">`:`<div class="pst none">${T()[s.kind==='event'?'talk':s.kind==='festival'?'fest':'film']}</div>`}<div class="film"><div class="ttl">${s.url?`<a href="${esc(s.url)}" target="_blank" rel="noopener">${hl(s.title)}</a>`:hl(s.title)}</div>${tags?`<div class="tags">${tags}</div>`:''}</div><div class="ven">${showings}</div></article>`;
     }
     html+='</div></section>';
   }
