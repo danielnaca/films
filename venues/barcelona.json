@@ -1,0 +1,161 @@
+{
+ "city": "Barcelona",
+ "country": "ES",
+ "timezone": "Europe/Madrid",
+ "venues": [
+  {
+   "id": "filmoteca",
+   "name": "Filmoteca de Catalunya",
+   "address": "Plaça de Salvador Seguí, 1-9, 08001 Barcelona",
+   "neighbourhood": "Raval",
+   "url": "https://www.filmoteca.cat/web/ca/view-agenda-mensual",
+   "description": "The Catalan national film archive: two screens of retrospectives, restorations, silent films with live music and cineclub cycles at €4 a ticket. Listings published through 2026-11-29 (November agenda online; October PDF at https://www.filmoteca.cat/web/sites/default/files/calendar_file/2026-09/Programa%2BAgenda_OCT-2026_movil.pdf).",
+   "status": null,
+   "listing_url": "https://www.filmoteca.cat/web/ca/view-agenda-mensual",
+   "image_rule": "agenda page /web/ca/view-agenda-mensual links /web/ca/film/<slug>; hero img.subcapcalera_* on film page"
+  },
+  {
+   "id": "xcentric",
+   "name": "Xcèntric – CCCB",
+   "address": "CCCB, Carrer de Montalegre, 5, 08001 Barcelona",
+   "neighbourhood": "Raval",
+   "url": "https://www.cccb.org/ca/w/projectes/xcentric",
+   "description": "The CCCB's experimental/avant-garde cinema programme, 25 years old this season, screening 16mm/35mm prints from Light Cone and the Filmmakers' Coop in the CCCB Auditori (€5). Listings published through 2026-11-29; some Nov 7-8 family sessions are at La Caldera (Eugeni d'Ors 12).",
+   "status": null,
+   "listing_url": "https://www.cccb.org/ca/w/projectes/xcentric",
+   "image_rule": "og:image on cccb.org activity page"
+  },
+  {
+   "id": "phenomena",
+   "name": "Sala Phenomena Experience",
+   "address": "Carrer de Sant Antoni Maria Claret, 168, 08025 Barcelona",
+   "neighbourhood": "Eixample / Sagrada Família",
+   "url": "https://phenomena-experience.com/index?pag=cartelera",
+   "description": "Single-screen cult/repertory palace (ex-Cine Nàpols), reopened 2026 after renovation; 35mm/70mm, 4K and Dolby Atmos classics, Bloody Weekends horror, Carpenter in 35 and Saturday 'Sesiones de tarde en 35mm'. Dated listings published through 2026-11-11 (plus Dune: Part Three preview 2026-12-15); 'El repertorio que viene' lists undated upcoming repertory (Alice Doesn't Live Here Anymore 4K, Sorcerer 4K, Wild at Heart 35mm, Interview with the Vampire 35mm, Paint Your Wagon 35mm, Lifeboat 4K, Performance 4K, The Piano 35mm, Pirates 35mm, The Naked Prey 35mm, Avanti! 35mm, The Tenant, Romeo + Juliet 35mm, Sid and Nancy 4K).",
+   "status": null,
+   "listing_url": "https://phenomena-experience.com/index?pag=cartelera",
+   "image_rule": "ficha page: first <img src=.../imagenes/*_H.jpg>"
+  },
+  {
+   "id": "zumzeig",
+   "name": "Zumzeig Cinecooperativa",
+   "address": "Carrer de Béjar, 53, 08014 Barcelona",
+   "neighbourhood": "Sants-Hostafrancs",
+   "url": "https://zumzeigcine.coop/cinema/calendari/",
+   "description": "Non-profit cooperative single-screen cinema with a bistro: VO arthouse first runs, accompanied sessions with directors (marked * on its agenda), restorations, and festival host (AFFBCN, L'Alternativa, El Meu Primer Festival). Full daily listings published through 2026-11-05; special sessions published through 2026-12-03.",
+   "status": null,
+   "listing_url": "https://zumzeigcine.coop/cinema/calendari/",
+   "image_rule": "og:image on zumzeigcine.coop/cinema/films/<slug>/"
+  },
+  {
+   "id": "girona",
+   "name": "Cinemes Girona",
+   "address": "Carrer de Girona, 175, 08037 Barcelona",
+   "neighbourhood": "Eixample Dreta",
+   "url": "https://www.cinemesgirona.cat/cartellera",
+   "description": "Three-screen independent in the Eixample that hosts most of the city's small festivals (AFFBCN, BAAR, BARQ, MIFDB) alongside VOSE releases, opera/ballet broadcasts and 'Dimarts cinema sènior'. Listings published through 2026-11-07 for films (opera/ballet dates run further).",
+   "status": null,
+   "listing_url": "https://www.cinemesgirona.cat/cartellera",
+   "image_rule": "og:image (prefer -pos.webp over -sld.webp, served by bizcochito.es)"
+  },
+  {
+   "id": "verdi",
+   "name": "Cinemes Verdi (and Verdi Park)",
+   "address": "Carrer de Verdi, 32, 08012 Barcelona (Verdi Park: Carrer de Torrijos, 49)",
+   "neighbourhood": "Gràcia",
+   "url": "https://barcelona.cines-verdi.com/cartellera",
+   "description": "Century-old Gràcia VO cinema; alongside first runs it programmes 'Dijous d'Imprescindibles' (Thursday classics in 4K with talks, €4.90), 'Dimecres Cultural' art documentaries and 'Sessió Teta' sessions. Site shows release dates but not showtimes beyond the current week; listings checked 2026-10-19.",
+   "status": null,
+   "listing_url": "https://barcelona.cines-verdi.com/cartellera",
+   "image_rule": "og:image (bizcochito -pos.webp)"
+  },
+  {
+   "id": "renoir",
+   "name": "Renoir Floridablanca",
+   "address": "Carrer de Floridablanca, 135, 08011 Barcelona",
+   "neighbourhood": "Sant Antoni",
+   "url": "https://www.cinesrenoir.com/cines/renoir-floridablanca/",
+   "description": "Seven-screen VOSE arthouse multiplex focused on European and independent first runs. Own site unreachable; listings taken from surtdecasa.cat, published through 2026-10-22.",
+   "status": null,
+   "listing_url": "https://www.cinesrenoir.com/cines/renoir-floridablanca/",
+   "image_rule": "own site down; surtdecasa listings, no images"
+  },
+  {
+   "id": "malda",
+   "name": "Cinema Maldà",
+   "address": "Carrer del Pi, 5, 08002 Barcelona",
+   "neighbourhood": "Barri Gòtic",
+   "url": "https://www.cinemamalda.com/",
+   "description": "Single-screen cinema (est. 1945) inside the Palau Maldà galleries, the last cinema in the old town: second runs + auteur premieres, 'sessió contínua' marathons (one ticket, four films), Tuesday senior day, and festival host (L'Alternativa, Barcelona Queer Film Festival 27-29 Nov). Open (Ara, 15 Oct 2026). Weekly listings could NOT be retrieved (site blocks fetching; aggregators show 'cartellera no disponible').",
+   "status": null,
+   "listing_url": "https://www.cinemamalda.com/",
+   "image_rule": "site blocks fetch; no listings"
+  },
+  {
+   "id": "institut-francais",
+   "name": "Institut français de Barcelona",
+   "address": "Carrer de Moià, 8, 08006 Barcelona",
+   "neighbourhood": "Sant Gervasi",
+   "url": "https://www.institutfrancais.es/barcelona/eventos/nuestros-eventos/",
+   "description": "French cultural institute with a cinema room hosting festival sessions (FILMETS, German film cycle, El Meu Primer Festival, L'Alternativa's 'Sierra de Teruel'). Listings published through 2026-11-14.",
+   "status": null,
+   "listing_url": "https://www.institutfrancais.es/barcelona/eventos/nuestros-eventos/",
+   "image_rule": "og:image"
+  },
+  {
+   "id": "caixaforum",
+   "name": "CaixaForum Barcelona",
+   "address": "Av. de Francesc Ferrer i Guàrdia, 6-8, 08038 Barcelona",
+   "neighbourhood": "Montjuïc / Sants",
+   "url": "https://caixaforum.org/ca/barcelona/p/asian-film-festival-barcelona-affbcn-2026-barcelona",
+   "description": "Cultural centre whose auditorium hosts the AFFBCN opening and selected festival screenings (€6).",
+   "status": null,
+   "listing_url": "https://caixaforum.org/ca/barcelona/p/asian-film-festival-barcelona-affbcn-2026-barcelona",
+   "image_rule": "og:image (403s to scripts; needs browser UA)"
+  },
+  {
+   "id": "mooby-aribau",
+   "name": "Mooby Aribau (In-Edit festival venue)",
+   "address": "Carrer d'Aribau, 8-10, 08011 Barcelona",
+   "neighbourhood": "Eixample",
+   "url": "https://es.in-edit.org/ca/programacio-2026/",
+   "description": "1962 cinema with the city's largest screen (1,100 seats), home of the In-Edit music documentary festival 29 Oct-8 Nov 2026. Included only for festival screenings.",
+   "status": null,
+   "listing_url": "https://es.in-edit.org/ca/programacio-2026/",
+   "image_rule": "In-Edit: programacio page links /ca/docs/<slug>/ → og:image"
+  },
+  {
+   "id": "mooby-arenas",
+   "name": "Mooby Arenas",
+   "address": "Centre Comercial Arenas, Gran Via de les Corts Catalanes, 373-385, 08015 Barcelona",
+   "neighbourhood": "Sants / Plaça Espanya",
+   "url": "https://www.timeout.es/barcelona/es/noticias/asi-es-como-puedes-conseguir-gratis-alguna-de-las-800-entradas-de-cine-de-los-horror-days-para-ver-clasicos-de-terror-101926",
+   "description": "Mall multiplex; included only for the free 'Horror Days' horror-classics event 28-29 Oct 2026.",
+   "status": null,
+   "listing_url": "https://www.timeout.es/barcelona/es/noticias/asi-es-como-puedes-conseguir-gratis-alguna-de-las-800-entradas-de-cine-de-los-horror-days-para-ver-clasicos-de-terror-101926",
+   "image_rule": "og:image"
+  },
+  {
+   "id": "texas",
+   "name": "Espai Texas (ex-Cinemes Texas)",
+   "address": "Carrer de Bailèn, 205, 08037 Barcelona",
+   "neighbourhood": "Gràcia",
+   "url": "https://cinemestexas.cat/",
+   "description": "Reopened autumn 2023 as a cinema (two screens, Catalan-subtitled re-releases and Catalan films) plus a 200-seat theatre. Participates in Fiesta del Cine 19-22 Oct 2026. Film listings could NOT be retrieved (cinemestexas.cat now serves only a blog; aggregators have no listings).",
+   "status": "open – listings unavailable",
+   "listing_url": "https://cinemestexas.cat/",
+   "image_rule": "blog only; no listings"
+  },
+  {
+   "id": "boliche",
+   "name": "Boliche Cinemes",
+   "address": "Avinguda Diagonal, 508, 08006 Barcelona",
+   "neighbourhood": "Gràcia / Diagonal",
+   "url": "https://www.boliche.cat/",
+   "description": "CLOSED permanently (closed for 'works' March 2024, confirmed not reopening Oct 2024).",
+   "status": "closed",
+   "listing_url": "https://www.boliche.cat/",
+   "image_rule": "closed"
+  }
+ ]
+}
